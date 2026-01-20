@@ -26,6 +26,7 @@ public class TaskService {
     }
 
     public List<Task> listActive() {
+
         return repo.findByIsDeletedFalseOrderByDueDateAsc();
     }
 

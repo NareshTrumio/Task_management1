@@ -2,20 +2,22 @@
 // frontend/src/components/TaskForm.jsx
 import { useState } from "react";
 
-const STATUSES = ["Pending", "In Progress", "Done"];
+const STATUSES = ["Pending", "In Progress", "Completed"];
 
 export default function TaskForm({ onCreate }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("Pending");
   const [dueDate, setDueDate] = useState("");
-
+ 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!title.trim()) {
       alert("Please enter a title.");
+
       return;
     }
+  
     await onCreate({
       title,
       description,
@@ -41,8 +43,9 @@ export default function TaskForm({ onCreate }) {
             className="mt-1 w-full border-2 border-blue-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
             placeholder="e.g., Buy groceries"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) =>setTitle(e.target.value) }
           />
+           
         </div>
 
         <div>
@@ -68,6 +71,7 @@ export default function TaskForm({ onCreate }) {
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>
+            {/* {titleError && <p className="text-red-600 text-sm mt-1">{titleError}</p>} */}
           </div>
 
           <div>

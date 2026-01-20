@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { listTasks, updateStatus, softDelete } from "../api";
 
-const STATUSES = ["Pending", "In Progress", "Done"];
+const STATUSES = ["Pending", "In Progress", "Completed","overdue"];
 
 export default function TaskTable({ refreshKey }) {
   const [tasks, setTasks] = useState([]);
@@ -12,7 +12,9 @@ export default function TaskTable({ refreshKey }) {
     setTasks(data);
   }
 
-  useEffect(() => { load(); }, [refreshKey]);
+  useEffect(() => { 
+    load();
+ }, [refreshKey]);
 
   const onStatusChange = async (id, status) => {
     await updateStatus(id, status);
@@ -57,6 +59,9 @@ export default function TaskTable({ refreshKey }) {
               </td>
               <td className="p-3">
                 {t.dueDate ? new Date(t.dueDate).toLocaleDateString() : "-"}
+                {t.dueDate && new Date(t.dueDate) < new Date() && t.status !== "Completed" && (
+                  <span className="ml-2 text-red-600 font-semibold">(Overdue)</span>
+                )}
               </td>
               <td className="p-3">
                 <button onClick={() => onDelete(t.id)} className="text-neutral-50 bg-red-500 hover:bg-red-600 hover:border-red-700 rounded px-2 py-1">
